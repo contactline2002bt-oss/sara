@@ -1,0 +1,10 @@
+# A felület megjelenése. Az alap betűméret képpontban (a Streamlit alapértéke 16);
+# ehhez igazodik az egész alkalmazás: szöveg, gombok, térközök.
+# A színek az NF Office arculati kézikönyvéből valók.
+[theme]
+base = "light"
+baseFontSize = 14
+primaryColor = "#736974"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f0edea"
+textColor = "#333033"

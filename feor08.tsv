@@ -1,0 +1,485 @@
+0110	Fegyveres szervek felsőfokú képesítést igénylő foglalkozásai
+0210	Fegyveres szervek középfokú képesítést igénylő foglalkozásai
+0310	Fegyveres szervek középfokú képesítést nem igénylő foglalkozásai
+1110	Törvényhozó, miniszter, államtitkár
+1121	Országos és területi közigazgatás, igazságszolgáltatás vezetője
+1122	Helyi önkormányzat választott vezetője
+1123	Helyi önkormányzat kinevezett vezetője
+1131	Társadalmi (érdek-képviseleti) és egyéb szervezet vezetője
+1132	Egyházi vezető
+1210	Gazdasági, költségvetési szervezet vezetője (igazgató, elnök, ügyvezető igazgató)
+1311	Mezőgazdasági, erdészeti, halászati és vadászati tevékenységet folytató egység vezetője
+1312	Ipari tevékenységet folytató egység vezetője
+1313	Építőipari tevékenységet folytató egység vezetője
+1321	Szállítási, logisztikai és raktározási tevékenységet folytató egység vezetője
+1322	Informatikai és telekommunikációs tevékenységet folytató egység vezetője
+1323	Pénzintézeti tevékenységet folytató egység vezetője
+1324	Szociális tevékenységet folytató egység vezetője
+1325	Gyermekgondozási tevékenységet folytató egység vezetője
+1326	Idősgondozási tevékenységet folytató egység vezetője
+1327	Egészségügyi tevékenységet folytató egység vezetője
+1328	Oktatási-nevelési tevékenységet folytató egység vezetője
+1329	Egyéb szolgáltatást nyújtó egység vezetője
+1331	Szálláshely-szolgáltatási tevékenységet folytató egység vezetője
+1332	Vendéglátó tevékenységet folytató egység vezetője
+1333	Kereskedelmi tevékenységet folytató egység vezetője
+1334	Üzleti szolgáltatási tevékenységet folytató egység vezetője
+1335	Kulturális tevékenységet folytató egység vezetője
+1336	Sport- és rekreációs tevékenységet folytató egység vezetője
+1339	Egyéb kereskedelmi, vendéglátó és hasonló szolgáltatási tevékenységet folytató egység vezetője
+1411	Számviteli és pénzügyi tevékenységet folytató egység vezetője
+1412	Személyzeti vezető, humánpolitikai egység vezetője
+1413	Kutatási és fejlesztési tevékenységet folytató egység vezetője
+1414	Vállalati stratégiatervezési egység vezetője
+1415	Értékesítési és marketingtevékenységet folytató egység vezetője
+1416	Reklám-, pr- és egyéb kommunikációs tevékenységet folytató egység vezetője
+1419	Egyéb gazdasági tevékenységet segítő egység vezetője
+2111	Bányamérnök
+2112	Kohó- és anyagmérnök
+2113	Élelmiszer-ipari mérnök
+2114	Fa- és könnyűipari mérnök
+2115	Építészmérnök
+2116	Építőmérnök
+2117	Vegyészmérnök
+2118	Gépészmérnök
+2121	Villamosmérnök (energetikai mérnök)
+2122	Villamosmérnök (elektronikai mérnök)
+2123	Telekommunikációs mérnök
+2131	Mezőgazdasági mérnök
+2132	Erdő- és természetvédelmi mérnök
+2133	Táj- és kertépítészmérnök
+2134	Település- és közlekedéstervező mérnök
+2135	Földmérő és térinformatikus
+2136	Grafikus és multimédia-tervező
+2137	Minőségbiztosítási mérnök
+2139	Egyéb, máshova nem sorolható mérnök
+2141	Rendszerelemző (informatikai)
+2142	Szoftverfejlesztő
+2143	Hálózat- és multimédia-fejlesztő
+2144	Alkalmazásprogramozó
+2149	Egyéb szoftver- és alkalmazásfejlesztő, -elemző
+2151	Adatbázis-tervező és -üzemeltető
+2152	Rendszergazda
+2153	Számítógép-hálózati elemző, üzemeltető
+2159	Egyéb adatbázis- és hálózati elemző, üzemeltető
+2161	Fizikus
+2162	Csillagász
+2163	Meteorológus
+2164	Kémikus
+2165	Geológus
+2166	Matematikus
+2167	Biológus, botanikus, zoológus és rokon foglalkozású
+2168	Környezetfelmérő, -tanácsadó
+2169	Egyéb természettudományi foglalkozású
+2211	Általános orvos
+2212	Szakorvos
+2213	Fogorvos, fogszakorvos
+2214	Gyógyszerész, szakgyógyszerész
+2221	Környezet- és foglalkozás-egészségügyi foglalkozású
+2222	Optometrista
+2223	Dietetikus és táplálkozási tanácsadó
+2224	Gyógytornász
+2225	Védőnő
+2226	Mentőtiszt
+2227	Hallás- és beszédterapeuta
+2228	Alternatív gyógymódot alkalmazó
+2229	Egyéb humán-egészségügyi (társ)foglalkozású
+2231	Ápoló (felsőfokú képzettséghez kapcsolódó)
+2232	Szülész(nő) (felsőfokú képzettséghez kapcsolódó)
+2241	Állatorvos
+2242	Növényorvos (növényvédelmi szakértő)
+2311	Szociálpolitikus
+2312	Szociális munkás és tanácsadó
+2410	Egyetemi, főiskolai oktató, tanár
+2421	Középiskolai tanár
+2422	Középfokú nevelési-oktatási intézményi szakoktató, gyakorlati oktató
+2431	Általános iskolai tanár, tanító
+2432	Csecsemő- és kisgyermeknevelő, óvodapedagógus
+2441	Gyógypedagógus
+2442	Konduktor
+2491	Pedagógiai szakértő, szaktanácsadó
+2492	Nyelvtanár (iskolarendszeren kívül)
+2493	Zenetanár (iskolarendszeren kívül)
+2494	Egyéb művészetek tanára (iskolarendszeren kívül)
+2495	Informatikatanár (iskolarendszeren kívül)
+2499	Egyéb szakképzett oktató, nevelő
+2511	Pénzügyi elemző és befektetési tanácsadó
+2512	Adótanácsadó, adószakértő
+2513	Könyvvizsgáló, könyvelő, könyvszakértő
+2514	Kontroller
+2521	Szervezetirányítási elemző, szervező
+2522	Üzletpolitikai elemző, szervező
+2523	Személyzeti és pályaválasztási szakértő
+2524	Képzési és személyzetfejlesztési szakértő
+2531	Piackutató, reklám- és marketingtevékenységet tervező, szervező
+2532	Pr-tevékenységet tervező, szervező
+2533	Kereskedelmi tervező, szervező
+2534	Informatikai és telekommunikációs technológiai termékek értékesítését tervező, szervező
+2611	Jogász, jogtanácsos
+2612	Ügyész
+2613	Bíró
+2614	Közjegyző
+2615	Ügyvéd
+2619	Egyéb jogi foglalkozású
+2621	Filozófus, politológus
+2622	Történész, régész
+2623	Néprajzkutató
+2624	Elemző közgazdász
+2625	Statisztikus
+2626	Szociológus, demográfus
+2627	Nyelvész, fordító, tolmács
+2628	Pszichológus
+2629	Egyéb társadalomtudományi foglalkozású
+2711	Könyvtáros, informatikus könyvtáros
+2712	Levéltáros
+2713	Muzeológus, múzeumi gyűjteménygondnok
+2714	Kulturális szervező
+2715	Könyv- és lapkiadó szerkesztője
+2716	Újságíró, rádióműsor-, televízióműsor-szerkesztő
+2717	Szakképzett edző, sportszervező, -irányító
+2719	Egyéb kulturális és sportfoglalkozású (felsőfokú képzettséghez kapcsolódó)
+2721	Író (újságíró nélkül)
+2722	Képzőművész
+2723	Iparművész, gyártmány- és ruhatervező
+2724	Zeneszerző, zenész, énekes
+2725	Rendező, operatőr
+2726	Színész, bábművész
+2727	Táncművész, koreográfus
+2728	Cirkuszi és hasonló előadóművész
+2729	Egyéb alkotó- és előadó-művészi foglalkozású (felsőfokú képzettséghez kapcsolódó)
+2730	Pap (lelkész), egyházi foglalkozású
+2910	Egyéb magasan képzett ügyintéző
+3111	Bányászati technikus
+3112	Kohó- és anyagtechnikus
+3113	Élelmiszer-ipari technikus
+3114	Fa- és könnyűipari technikus
+3115	Vegyésztechnikus
+3116	Gépésztechnikus
+3117	Építő- és építésztechnikus
+3121	Villamosipari technikus (energetikai technikus)
+3122	Villamosipari technikus (elektronikai technikus)
+3131	Mezőgazdasági technikus
+3132	Erdő- és természetvédelmi technikus
+3133	Földmérő és térinformatikai technikus
+3134	Környezetvédelmi technikus
+3135	Minőségbiztosítási technikus
+3136	Műszaki rajzoló, szerkesztő
+3139	Egyéb, máshova nem sorolható technikus
+3141	Informatikai és kommunikációs rendszereket kezelő technikus
+3142	Informatikai és kommunikációs rendszerek felhasználóit támogató technikus
+3143	Számítógéphálózat- és rendszertechnikus
+3144	Webrendszer- (hálózati) technikus
+3145	Műsorszóró és audiovizuális technikus
+3146	Telekommunikációs technikus
+3151	Energetikai (erőművi) berendezés vezérlője
+3152	Égető-, víz- és csatornaművi berendezés vezérlője
+3153	Vegyipari alapanyag-feldolgozó berendezés vezérlője
+3154	Kőolaj- és földgázfinomító berendezés vezérlője
+3155	Fémgyártási berendezés vezérlője
+3159	Egyéb folyamatirányító berendezés vezérlője
+3161	Munka- és termelésszervező
+3162	Energetikus
+3163	Munkavédelmi és üzembiztonsági foglalkozású
+3171	Tengeri és belvízi hajóparancsnok, fedélzeti tiszt
+3172	Légijármű-vezető, hajózómérnök
+3173	Légiforgalmi irányító
+3174	Légiforgalmi irányítástechnikai berendezések üzemeltetője
+3190	Egyéb műszaki foglalkozású
+3211	Bányászati szakmai irányító, felügyelő
+3212	Feldolgozóipari szakmai irányító, felügyelő
+3213	Építőipari szakmai irányító, felügyelő
+3221	Irodai szakmai irányító, felügyelő
+3222	Konyhafőnök, séf
+3311	Ápoló, szakápoló
+3312	Szülész(nő)i tevékenység segítője
+3321	Általános egészségügyi asszisztens
+3322	Egészségügyi dokumentátor
+3323	Orvosi képalkotó diagnosztikai és terápiás berendezések kezelője
+3324	Orvosi laboratóriumi asszisztens
+3325	Fogászati asszisztens
+3326	Gyógyszertári és gyógyszerellátási asszisztens
+3327	Alternatív gyógymódok alkalmazásának segítője
+3331	Környezet- és foglalkozás-egészségügyi kiegészítő foglalkozású
+3332	Fizioterápiás asszisztens, masszőr
+3333	Fogtechnikus
+3334	Ortopédiai eszközkészítő
+3335	Látszerész
+3339	Egyéb, humánegészségügyhöz kapcsolódó foglalkozású
+3341	Állatorvosi asszisztens
+3342	Növényorvosi (növényvédelmi) asszisztens
+3410	Oktatási asszisztens
+3511	Szociális segítő
+3512	Hivatásos nevelőszülő, főállású anya
+3513	Szociális gondozó, szakgondozó
+3514	Jelnyelvi tolmács
+3515	Ifjúságsegítő
+3520	Munkaerő-piaci szolgáltatási ügyintéző
+3611	Pénzügyi ügyintéző (a pénzintézeti ügyintéző kivételével)
+3612	Pénzintézeti ügyintéző
+3613	Tőzsde- és pénzügyi ügynök, bróker
+3614	Számviteli ügyintéző
+3615	Statisztikai ügyintéző
+3616	Értékbecslő, kárbecslő, kárszakértő
+3621	Biztosítási ügynök, ügyintéző
+3622	Kereskedelmi ügyintéző
+3623	Anyaggazdálkodó, felvásárló
+3624	Ügynök (a biztosítási ügynök kivételével)
+3631	Konferencia- és rendezvényszervező
+3632	Marketing- és pr-ügyintéző
+3633	Ingatlanügynök, ingatlanforgalmazási ügyintéző
+3639	Egyéb, máshova nem sorolható üzleti jellegű szolgáltatás ügyintézője
+3641	Személyi asszisztens
+3642	Jogi asszisztens
+3649	Egyéb igazgatási és jogi asszisztens
+3651	Vám- és pénzügyőr
+3652	Adó- és illetékhivatali ügyintéző
+3653	Társadalombiztosítási és segélyezési hatósági ügyintéző
+3654	Hatósági engedélyek kiadásával foglalkozó ügyintéző
+3655	Nyomozó
+3656	Végrehajtó, adósságbehajtó
+3659	Egyéb hatósági ügyintéző
+3711	Segédszínész, statiszta
+3712	Segédrendező
+3713	Fényképész
+3714	Díszletező, díszítő
+3715	Kiegészítő filmgyártási és színházi foglalkozású
+3716	Lakberendező, dekoratőr
+3717	Kulturális intézményi szaktechnikus
+3719	Egyéb művészeti és kulturális foglalkozású
+3721	Sportoló
+3722	Fitnesz- és rekreációs programok irányítója
+3730	Egyéb vallási foglalkozású
+3910	Egyéb ügyintéző
+4111	Titkár(nő)
+4112	Általános irodai adminisztrátor
+4113	Gépíró, szövegszerkesztő
+4114	Adatrögzítő, kódoló
+4121	Könyvelő (analitikus)
+4122	Bérelszámoló
+4123	Pénzügyi, statisztikai, biztosítási adminisztrátor
+4129	Egyéb számviteli foglalkozású
+4131	Készlet- és anyagnyilvántartó
+4132	Szállítási, szállítmányozási nyilvántartó
+4133	Könyvtári, levéltári nyilvántartó
+4134	Humánpolitikai adminisztrátor
+4135	Postai szolgáltató (kézbesítő, válogató)
+4136	Iratkezelő, irattáros
+4190	Egyéb, máshova nem sorolható irodai, ügyviteli foglalkozású
+4211	Banki pénztáros
+4212	Szerencsejáték-szervező
+4213	Zálogházi ügyintéző és pénzkölcsönző
+4221	Utazásszervező, tanácsadó
+4222	Recepciós
+4223	Szállodai recepciós
+4224	Ügyfél- (vevő)tájékoztató
+4225	Ügyfélszolgálati központ tájékoztatója
+4226	Lakossági kérdező, összeíró
+4227	Postai ügyfélkapcsolati foglalkozású
+4229	Egyéb ügyfélkapcsolati foglalkozású
+5111	Kereskedő
+5112	Vezető eladó
+5113	Bolti eladó
+5114	Kölcsönző
+5115	Piaci, utcai árus
+5116	Piaci, utcai étel- és italárus
+5117	Bolti pénztáros, jegypénztáros
+5121	Üzemanyagtöltő állomás kezelője
+5122	Áru- és divatbemutató
+5123	Telefonos (multimédiás) értékesítési ügynök
+5129	Egyéb, máshova nem sorolható kereskedelmi foglalkozású
+5131	Vendéglős
+5132	Pincér
+5133	Pultos
+5134	Szakács
+5135	Cukrász
+5211	Fodrász
+5212	Kozmetikus
+5213	Manikűrös, pedikűrös
+5219	Egyéb személyi szolgáltatási foglalkozású
+5221	Gyermekfelügyelő, dajka
+5222	Segédápoló, műtőssegéd
+5223	Házi gondozó
+5229	Egyéb személygondozási foglalkozású
+5231	Kalauz, menetjegyellenőr
+5232	Utaskísérő (repülőn, hajón)
+5233	Idegenvezető
+5241	Vezető takarító
+5242	Házvezető
+5243	Épületgondnok
+5251	Rendőr
+5252	Tűzoltó
+5253	Büntetés-végrehajtási őr
+5254	Vagyonőr, testőr
+5255	Természetvédelmi őr
+5256	Közterület-felügyelő
+5259	Egyéb személy- és vagyonvédelmi foglalkozású
+5291	Járművezető-oktató
+5292	Hobbiállat-gondozó, -kozmetikus
+5293	Temetkezési foglalkozású
+5299	Egyéb, máshova nem sorolható szolgáltatási foglalkozású
+6111	Szántóföldinövény-termesztő
+6112	Bionövény-termesztő
+6113	Zöldségtermesztő
+6114	Szőlő-, gyümölcstermesztő
+6115	Dísznövény-, virág- és faiskolai kertész, csemetenevelő
+6116	Gyógynövénytermesztő
+6119	Egyéb növénytermesztési foglalkozású
+6121	Szarvasmarha-, ló-, sertés-, juhtartó és -tenyésztő
+6122	Baromfitartó és -tenyésztő
+6123	Méhész
+6124	Kisállattartó és -tenyésztő
+6130	Vegyes profilú gazdálkodó
+6211	Erdészeti foglalkozású
+6212	Fakitermelő (favágó)
+6220	Vadgazdálkodási foglalkozású
+6230	Halászati foglalkozású
+7111	Húsfeldolgozó
+7112	Gyümölcs- és zöldségfeldolgozó, -tartósító
+7113	Tejfeldolgozó, tejtermékgyártó
+7114	Pék, édesiparitermék-gyártó
+7115	Borász és egyéb szeszesital-gyártó, szikvízkészítő
+7211	Szabásminta-készítő
+7212	Szabó, varró
+7213	Kalapos, kesztyűs
+7214	Szűcs, szőrmefestő
+7215	Tímár
+7216	Bőrdíszműves, bőröndös, bőrtermékkészítő, -javító
+7217	Cipész, cipőkészítő, -javító
+7221	Famegmunkáló
+7222	Faesztergályos
+7223	Bútorasztalos
+7224	Kárpitos
+7225	Kádár, bognár
+7231	Nyomdai előkészítő
+7232	Nyomdász, nyomdaipari gépmester
+7233	Könyvkötő
+7310	Fémöntőminta-készítő
+7321	Lakatos
+7322	Szerszámkészítő
+7323	Forgácsoló
+7324	Fémcsiszoló, köszörűs, szerszámköszörűs
+7325	Hegesztő, lángvágó
+7326	Kovács
+7327	Festékszóró, fényező
+7328	Fém- és egyéb tartószerkezet-szerelő
+7331	Gépjármű- és motorkarbantartó, -javító
+7332	Repülőgépmotor-karbantartó, -javító
+7333	Mezőgazdasági és ipari gép (motor) karbantartója, javítója
+7334	Mechanikaigép-karbantartó, -javító (műszerész)
+7335	Kerékpár-karbantartó, -javító
+7341	Villamos gépek és készülékek műszerésze, javítója
+7342	Informatikai és telekommunikációs berendezések műszerésze, javítója
+7343	Elektromoshálózat-szerelő, -javító
+7411	Címfestő
+7412	Ékszerkészítő, ötvös, drágakőcsiszoló
+7413	Keramikus
+7414	Üveggyártó
+7415	Hangszerkészítő
+7416	Szőr- és tollfeldolgozó
+7417	Nád- és fűzfeldolgozó, seprű- kefegyártó
+7418	Textilműves, hímző, csipkeverő
+7419	Egyéb kézműipari foglalkozású
+7420	Finommechanikai műszerész
+7511	Kőműves
+7512	Gipszkartonozó, stukkózó
+7513	Ács
+7514	Épületasztalos
+7515	Építményszerkezet-szerelő
+7519	Egyéb építőmesteri foglalkozású
+7521	Vezeték- és csőhálózat-szerelő (víz, gáz, fűtés)
+7522	Szellőző-, hűtő- és klimatizálóberendezés-szerelő
+7523	Felvonószerelő
+7524	Épületvillamossági szerelő, villanyszerelő
+7529	Egyéb építési, szerelési foglalkozású
+7531	Szigetelő
+7532	Tetőfedő
+7533	Épület-, építménybádogos
+7534	Burkoló
+7535	Festő és mázoló
+7536	Kőfaragó, műköves
+7537	Kályha- és kandallóépítő
+7538	Üvegező
+7539	Egyéb építési szakipari foglalkozású
+7911	Ipari búvár
+7912	Ipari alpinista
+7913	Robbantómester
+7914	Kártevőirtó, gyomirtó
+7915	Kéményseprő, épületszerkezet-tisztító
+7919	Egyéb, máshova nem sorolható ipari és építőipari foglalkozású
+8111	Élelmiszer-, italgyártó gép kezelője
+8112	Dohánygyártó gép kezelője
+8121	Textilipari gép kezelője és gyártósor mellett dolgozó
+8122	Ruházati gép kezelője és gyártósor mellett dolgozó
+8123	Bőrkikészítő és -feldolgozó gép kezelője és gyártósor mellett dolgozó
+8124	Cipőgyártó gép kezelője és gyártósor mellett dolgozó
+8125	Fafeldolgozó gép kezelője és gyártósor mellett dolgozó
+8126	Papír- és cellulóztermék-gyártó gép kezelője és gyártósor mellett dolgozó
+8131	Kőolaj- és földgázfeldolgozó gép kezelője
+8132	Vegyi alapanyagot és terméket gyártó gép kezelője
+8133	Gyógyszergyártó gép kezelője
+8134	Műtrágya- és növényvédőszer-gyártó gép kezelője
+8135	Műanyagtermék-gyártó gép kezelője
+8136	Gumitermékgyártó gép kezelője
+8137	Fotó- és mozgófilmlaboráns
+8141	Kerámiaipari terméket gyártó gép kezelője
+8142	Üveget és üvegterméket gyártó gép kezelője
+8143	Cement-, kő- és egyéb ásványianyag-feldolgozó gép kezelője
+8144	Papíripari alapanyagot gyártó gép kezelője
+8151	Fémfeldolgozó gép kezelője
+8152	Fémmegmunkáló, felületkezelő gép kezelője
+8190	Egyéb, máshova nem sorolható feldolgozóipari gép kezelője
+8211	Mechanikaigép-összeszerelő
+8212	Villamosberendezés-összeszerelő
+8219	Egyéb termék-összeszerelő
+8311	Szilárdásvány-kitermelő gép kezelője (szén, kő)
+8312	Kútfúró, mélyfúró gép kezelője (kőolaj, földgáz, víz)
+8321	Energetikai gép kezelője
+8322	Vízgazdálkodási gép kezelője
+8323	Kazángépkezelő
+8324	Sugármentesítő gép, berendezés kezelője
+8325	Csomagoló-, palackozó- és címkézőgép kezelője
+8326	Mozigépész, vetítőgépész
+8327	Mosodai gép kezelője
+8329	Egyéb, máshova nem sorolható, helyhez kötött gép kezelője
+8411	Mozdonyvezető
+8412	Vasútijármű-vezetéshez kapcsolódó foglalkozású
+8413	Villamosvezető
+8414	Metróvezető
+8415	Trolibuszvezető
+8416	Személygépkocsi-vezető
+8417	Tehergépkocsi-vezető, kamionsofőr
+8418	Autóbuszvezető
+8419	Egyéb járművezető és kapcsolódó foglalkozású
+8421	Mezőgazdasági, erdőgazdasági, növényvédő gép kezelője
+8422	Földmunkagép és hasonló könnyű- és nehézgép kezelője
+8423	Köztisztasági, településtisztasági gép kezelője
+8424	Daru, felvonó és hasonló anyagmozgató gép kezelője
+8425	Targoncavezető
+8430	Hajószemélyzet, kormányos, matróz
+9111	Háztartási takarító és kisegítő
+9112	Intézményi takarító és kisegítő
+9113	Kézi mosó, vasaló
+9114	Járműtakarító
+9115	Ablaktisztító
+9119	Egyéb takarító és kisegítő
+9211	Szemétgyűjtő, utcaseprő
+9212	Hulladékosztályozó
+9221	Pedálos vagy kézi hajtású gépek vezetője
+9222	Állati erővel vont jármű hajtója
+9223	Rakodómunkás
+9224	Pultfeltöltő, árufeltöltő
+9225	Kézi csomagoló
+9231	Portás, telepőr, egyszerű őr
+9232	Mérőóra-leolvasó és hasonló egyszerű foglalkozású
+9233	Hivatalsegéd, kézbesítő
+9234	Hordár, csomagkihordó
+9235	Gyorséttermi eladó
+9236	Konyhai kisegítő
+9237	Háztartási alkalmazott
+9238	Parkolóőr
+9239	Egyéb, máshova nem sorolható egyszerű szolgáltatási és szállítási foglalkozású
+9310	Egyszerű ipari foglalkozású
+9321	Kubikos
+9329	Egyéb egyszerű építőipari foglalkozású
+9331	Egyszerű mezőgazdasági foglalkozású
+9332	Egyszerű erdészeti, vadászati és halászati foglalkozású

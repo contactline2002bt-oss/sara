@@ -1,0 +1,11 @@
+streamlit>=1.50
+supabase
+anthropic
+pydantic
+openpyxl
+python-pptx
+python-docx
+reportlab
+markdown-it-py
+pypdf
+pillow

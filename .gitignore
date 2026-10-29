@@ -1,0 +1,5 @@
+# titkos beállítások soha ne kerüljenek a repóba
+.streamlit/secrets.toml
+.env
+__pycache__/
+*.pyc
