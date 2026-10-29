@@ -623,22 +623,30 @@ def _parse_markdown(text):
 
 
 # ---------------------------------------------------------------------------
-# Arculat a Word- és PDF-dokumentumokhoz (NF Office arculati kézikönyv):
-# címsor Fraunces, szöveg Poppins Light; színek 736974, 333033, b2b1b2, f0edea; logó az első oldal tetején.
+# Arculat a Word- és PDF-dokumentumokhoz (Contact-Line 2002 Bt. arculati kézikönyv, 2026. október):
+# színek 0A2540 (Deep Corporate Blue), 00D4FF (Azure Light Blue, akcentus), F4F6F9 (Soft Background Gray);
+# címsor Montserrat / Inter / Helvetica Bold, szöveg Open Sans / Roboto / Arial.
+# Az első oldal a hivatalos levélpapír mintáját követi: balra a logó, jobbra a szlogen, alatta azúr vonal;
+# a láblécben a cégadatok.
 # Más arculathoz elég ezt a részt, a fonts/ mappa betűit és a logófájlt cserélni.
 # ---------------------------------------------------------------------------
 _HERE = os.path.dirname(os.path.abspath(__file__))
 BRAND = {
-    "primary": "736974",   # mályvaszürke: másodlagos címsorok, lábléc
-    "dark": "333033",      # sötét: szöveg, főcím
-    "grey": "B2B1B2",      # szürke: vonalak
-    "light": "F0EDEA",     # törtfehér: táblázatfejléc háttere
-    "logo": os.path.join(_HERE, "assets", "nf_office_logo.png"),
-    "logo_width_cm": 3.4,
-    # Word: a betűket a megnyitó gép adja, ezért itt csak a nevük szerepel
-    "docx_body_font": "Poppins Light",
-    "docx_bold_font": "Poppins",  # félkövérrel együtt a valódi Poppins Bold változatot adja
-    "docx_head_font": "Fraunces",
+    "primary": "0A2540",   # Deep Corporate Blue: címsorok, lábléc
+    "dark": "0A2540",      # Deep Corporate Blue: szöveg, főcím
+    "grey": "C9D3DF",      # a mélykék halvány árnyalata: táblázatvonalak, lábléc vonala
+    "light": "F4F6F9",     # Soft Background Gray: táblázatfejléc háttere
+    "accent": "00D4FF",    # Azure Light Blue: a fejléc alatti vonal (szövegszínnek túl világos)
+    "logo": os.path.join(_HERE, "assets", "contact_line_logo.png"),
+    "logo_width_cm": 6.2,
+    "tagline": "Üzletviteli Tanácsadás és Szolgáltatás",
+    "footer_text": "Contact-Line 2002 Bt. • Cégjegyzékszám: 01-06-782803 • Adószám: 21447013-2-41",
+    "head_bold": True,     # a címsorbetű a félkövér változat (Helvetica Bold)
+    # Word: a betűket a megnyitó gép adja, ezért itt csak a nevük szerepel (a kézikönyv tartalék betűi,
+    # mert ezek minden gépen megvannak; a Helvetica helyett Windowson az Arial jelenik meg)
+    "docx_body_font": "Arial",
+    "docx_bold_font": "Arial",
+    "docx_head_font": "Helvetica",
 }
 _HU_MONTHS = ("január", "február", "március", "április", "május", "június", "július", "augusztus",
               "szeptember", "október", "november", "december")
@@ -682,7 +690,8 @@ def make_brand(name="", color="333033", logo_png=None):
     Logó nélkül üres fejléc."""
     color = (color or "333033").lstrip("#").upper()
     return {"name": name, "primary": color, "dark": "222222", "grey": "B5B5B5", "light": "F2F2F2",
-            "logo": logo_png or None, "logo_width_cm": 3.4, "neutral": True,
+            "logo": logo_png or None, "logo_width_cm": 3.4, "neutral": True, "accent": None, "tagline": "",
+            "footer_text": "", "head_bold": False,
             "docx_body_font": "Calibri", "docx_bold_font": "Calibri", "docx_head_font": "Calibri"}
 
 
@@ -781,7 +790,7 @@ def apply_letterhead(doc_bytes, letterhead_bytes):
 # ---------------------------------------------------------------------------
 def markdown_to_docx(md_text, title="", brand=None, base=None):
     """Markdown → Word. A base egy fejléces papír (.docx bájtjai): ekkor annak fejléce, lábléce, margói és betűi
-    maradnak, a tartalom a törzsébe kerül; különben az NF Office (vagy a brand) arculata."""
+    maradnak, a tartalom a törzsébe kerül; különben a Contact-Line 2002 (vagy a brand) arculata."""
     from docx import Document
     from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT
     from docx.oxml import OxmlElement
@@ -843,7 +852,7 @@ def markdown_to_docx(md_text, title="", brand=None, base=None):
             st = doc.styles[f"Heading {level}"]
             set_font(st, B["docx_bold_font"] if level == 4 else B["docx_head_font"])
             st.font.size, st.font.color.rgb = Pt(size), rgb(color)
-            st.font.bold, st.font.italic = level == 4, False
+            st.font.bold, st.font.italic = bool(B.get("head_bold")) or level == 4, False
             st.paragraph_format.space_before, st.paragraph_format.space_after = Pt(before), Pt(after)
             st.paragraph_format.line_spacing = 1.1
             st.paragraph_format.keep_with_next = True
@@ -947,6 +956,15 @@ def markdown_to_docx(md_text, title="", brand=None, base=None):
             hp = section.first_page_header.paragraphs[0]
             hp.paragraph_format.space_after = Pt(10)
             hp.add_run().add_picture(logo, width=Cm(B["logo_width_cm"]))
+            if B.get("tagline"):   # jobbra a szlogen, a logó alsó vonalához igazítva
+                header_tabs = doc.styles["Header"].element.get_or_add_pPr().find(qn("w:tabs"))
+                if header_tabs is not None:   # a sablon középső tabulátora nélkül a szlogen a jobb szélre kerül
+                    header_tabs.getparent().remove(header_tabs)
+                hp.paragraph_format.tab_stops.add_tab_stop(text_width, WD_TAB_ALIGNMENT.RIGHT)
+                tr = hp.add_run("\t" + B["tagline"])
+                tr.font.size, tr.font.color.rgb = Pt(8.5), rgb("primary")
+            if B.get("accent"):
+                border(hp, "bottom", B["accent"], size="8", space="6")
         today = _today_hu()
         footer_tabs = doc.styles["Footer"].element.get_or_add_pPr().find(qn("w:tabs"))
         if footer_tabs is not None:  # a sablon középre és jobbra igazító tabulátorai nélkül csak a sajátunk marad
@@ -970,7 +988,7 @@ def markdown_to_docx(md_text, title="", brand=None, base=None):
             fp.paragraph_format.space_after = Pt(0)
             fp.paragraph_format.tab_stops.add_tab_stop(text_width, WD_TAB_ALIGNMENT.RIGHT)
             border(fp, "top", B["grey"], size="4", space="6")
-            footer_run(fp, today + "\t")
+            footer_run(fp, (B["footer_text"] + "\t" + today + "  |  ") if B.get("footer_text") else today + "\t")
             footer_run(fp, field="begin")
             footer_run(fp, instr="PAGE")
             footer_run(fp, field="separate")
@@ -990,7 +1008,8 @@ _FONTS = None
 
 def _register_fonts():
     """A betűk betöltése; a használandó betűnevek szótárát adja vissza.
-    Ha az arculati betűk (Poppins, Fraunces) hiányoznak a fonts/ mappából, DejaVu betűvel készül a PDF."""
+    Sorrend a kézikönyv szerint: szöveg Open Sans, ha nincs, Liberation Sans (Arial-méretű); címsor Montserrat,
+    ha nincs, Inter. Ha ezek mind hiányoznak a fonts/ mappából, DejaVu betűvel készül a PDF."""
     global _FONTS
     if _FONTS:
         return _FONTS
@@ -1021,15 +1040,17 @@ def _register_fonts():
                                   italic="DejaVu-Italic", boldItalic="DejaVu-BoldItalic")
     fonts = {"body": "DejaVu", "bold": "DejaVu-Bold", "italic": "DejaVu-Italic", "head": "DejaVu-Bold",
              "fallback": "DejaVu", "mono": "DejaVuMono"}
-    if register((("Poppins", "Poppins-Light.ttf"), ("Poppins-Bold", "Poppins-SemiBold.ttf"),
-                 ("Poppins-Italic", "Poppins-LightItalic.ttf"), ("Poppins-BoldItalic", "Poppins-SemiBoldItalic.ttf"))):
-        pdfmetrics.registerFontFamily("Poppins", normal="Poppins", bold="Poppins-Bold",
-                                      italic="Poppins-Italic", boldItalic="Poppins-BoldItalic")
-        fonts.update(body="Poppins", bold="Poppins-Bold", italic="Poppins-Italic", head="Poppins-Bold")
-    if register((("Fraunces", "Fraunces-Light.ttf"), ("Fraunces-Bold", "Fraunces-SemiBold.ttf"))):
-        pdfmetrics.registerFontFamily("Fraunces", normal="Fraunces", bold="Fraunces-Bold",
-                                      italic="Fraunces", boldItalic="Fraunces-Bold")
-        fonts["head"] = "Fraunces"
+    for fam, prefix in (("OpenSans", "OpenSans"), ("Liberation", "LiberationSans")):   # szövegbetű
+        if register(((fam, f"{prefix}-Regular.ttf"), (f"{fam}-Bold", f"{prefix}-Bold.ttf"),
+                     (f"{fam}-Italic", f"{prefix}-Italic.ttf"), (f"{fam}-BoldItalic", f"{prefix}-BoldItalic.ttf"))):
+            pdfmetrics.registerFontFamily(fam, normal=fam, bold=f"{fam}-Bold", italic=f"{fam}-Italic",
+                                          boldItalic=f"{fam}-BoldItalic")
+            fonts.update(body=fam, bold=f"{fam}-Bold", italic=f"{fam}-Italic", head=f"{fam}-Bold")
+            break
+    for fam, file in (("Montserrat-Bold", "Montserrat-Bold.ttf"), ("Inter-Bold", "Inter-Bold.ttf")):   # címsorbetű
+        if register(((fam, file),)):
+            fonts["head"] = fam
+            break
     fonts["glyphs"] = {name: set(pdfmetrics.getFont(name).face.charToGlyph)
                        for name in {fonts["body"], fonts["head"]}}
     _FONTS = fonts
@@ -1103,7 +1124,7 @@ def markdown_to_pdf(md_text, title="", brand=None):
     logo_h = logo_w * ratio
     left, right = 2 * cm + 6, A4[0] - 2 * cm - 6  # a szövegtükör szélei (a keret 6 pontos belső margójával)
     avail = right - left
-    story = [Spacer(1, logo_h + 0.3 * cm)] if logo else []
+    story = [Spacer(1, logo_h + (0.6 if B.get('accent') else 0.3) * cm)] if logo else []
     for blk in blocks:
         kind = blk[0]
         if kind == "h":
@@ -1159,8 +1180,12 @@ def markdown_to_pdf(md_text, title="", brand=None):
         canvas.line(left, 1.55 * cm, right, 1.55 * cm)
         canvas.setFont(F["body"], 7.5)
         canvas.setFillColor(primary)
-        canvas.drawString(left, 1.1 * cm, today)
-        canvas.drawRightString(right, 1.1 * cm, str(doc_.page))
+        if B.get("footer_text"):
+            canvas.drawString(left, 1.1 * cm, B["footer_text"])
+            canvas.drawRightString(right, 1.1 * cm, f"{today}  |  {doc_.page}")
+        else:
+            canvas.drawString(left, 1.1 * cm, today)
+            canvas.drawRightString(right, 1.1 * cm, str(doc_.page))
         canvas.restoreState()
 
     def first_page(canvas, doc_):
@@ -1169,7 +1194,16 @@ def markdown_to_pdf(md_text, title="", brand=None):
             img = ImageReader(logo) if not isinstance(logo, str) else logo
             if not isinstance(logo, str):
                 logo.seek(0)
-            canvas.drawImage(img, left, A4[1] - 1.6 * cm - logo_h, width=logo_w, height=logo_h, mask="auto")
+            top = A4[1] - 1.6 * cm
+            canvas.drawImage(img, left, top - logo_h, width=logo_w, height=logo_h, mask="auto")
+            if B.get("tagline"):   # jobbra a szlogen a logó alsó vonalán
+                canvas.setFont(F["body"], 8)
+                canvas.setFillColor(primary)
+                canvas.drawRightString(right, top - logo_h + 1, B["tagline"])
+            if B.get("accent"):   # azúr vonal a fejléc alatt, mint a levélpapíron
+                canvas.setStrokeColor(colors.HexColor("#" + B["accent"]))
+                canvas.setLineWidth(1)
+                canvas.line(left, top - logo_h - 0.3 * cm, right, top - logo_h - 0.3 * cm)
         footer(canvas, doc_)
 
     buf = io.BytesIO()

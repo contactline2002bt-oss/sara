@@ -1,10 +1,11 @@
 # A felület megjelenése. Az alap betűméret képpontban (a Streamlit alapértéke 16);
 # ehhez igazodik az egész alkalmazás: szöveg, gombok, térközök.
-# A színek az NF Office arculati kézikönyvéből valók.
+# A színek a Contact-Line 2002 Bt. arculati kézikönyvéből valók:
+# Deep Corporate Blue #0A2540, Azure Light Blue #00D4FF, Soft Background Gray #F4F6F9.
 [theme]
 base = "light"
 baseFontSize = 14
-primaryColor = "#736974"
+primaryColor = "#0A2540"
 backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f0edea"
-textColor = "#333033"
+secondaryBackgroundColor = "#F4F6F9"
+textColor = "#0A2540"

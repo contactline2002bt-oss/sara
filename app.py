@@ -104,29 +104,33 @@ claude_client = Anthropic(api_key=ANTHROPIC_API_KEY.replace("'", "").replace('"'
 db.init(SUPABASE_URL, SUPABASE_KEY)
 
 # --- MEGJELENÉS ------------------------------------------------------------
-# NF Office arculat (arculati kézikönyv): címsor Fraunces, szöveg Poppins;
-# színek: #736974 (mályvaszürke), #333033 (sötét), #b2b1b2 (szürke), #f0edea (törtfehér).
-BRAND = "#736974"
-BRAND_DARK = "#333033"
-BRAND_LIGHT = "#f0edea"
+# Contact-Line 2002 Bt. arculata (arculati kézikönyv, 2026. október): címsor Montserrat, szöveg Open Sans;
+# színek: #0A2540 (Deep Corporate Blue: szöveg, elsődleges), #00D4FF (Azure Light Blue: akcentus, kiemelés),
+# #F4F6F9 (Soft Background Gray: másodlagos felületek). Az azúr szövegszínnek fehér alapon túl világos,
+# ezért csak vonalakhoz, jelölőkhöz és háttérárnyalatként használjuk.
+BRAND = "#0A2540"
+BRAND_DARK = "#0A2540"
+BRAND_LIGHT = "#F4F6F9"
+BRAND_ACCENT = "#00D4FF"
+BRAND_ACCENT_SOFT = "#B8F1FF"   # az azúr világos árnyalata (kiemelés háttere)
 
 CSS = f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 /* betűtípusok (az ikonok saját betűkészlete érintetlen marad, mert azt az ikon eleme maga állítja be) */
 html, body, .stApp, .stApp input, .stApp textarea, .stApp button, .stApp select,
 [data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] li,
-[data-testid="stWidgetLabel"] p {{ font-family: 'Poppins', 'Source Sans', 'Source Sans Pro', sans-serif !important; }}
+[data-testid="stWidgetLabel"] p {{ font-family: 'Open Sans', Roboto, Arial, sans-serif !important; }}
 .sara-header, .sara-side-title.big,
 [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {{
-    font-family: 'Fraunces', Georgia, serif !important; color: {BRAND_DARK}; }}
+    font-family: 'Montserrat', Inter, Helvetica, Arial, sans-serif !important; font-weight: 700; color: {BRAND_DARK}; }}
 
 /* logó az oldalsáv tetején, körülötte szabadon hagyott térrel */
 /* (A Streamlit a szövegelemek dobozát alul 1rem-mel felhúzza, mert bekezdést vár benne; a saját, bekezdés
    nélküli elemeinknél ezt alsó margóval egyenlítjük ki, különben rájuk csúszik a következő elem.) */
 .sara-logo {{ text-align: center; padding: .1rem 0 .3rem; margin-bottom: 1rem; }}
-.sara-logo img {{ width: 8.5rem; max-width: 70%; height: auto; }}
+.sara-logo img {{ width: 13rem; max-width: 92%; height: auto; }}
 
 /* az oldalsáv saját címei (a beépített címsorokra rácsúszott az alattuk lévő elem) */
 .sara-side-title {{ font-weight: 600; font-size: 1rem; line-height: 1.4; margin: .1rem 0 1rem; color: {BRAND_DARK}; }}
@@ -164,7 +168,9 @@ hr {{ margin: .5rem 0 !important; }}
 /* keskeny, mindig látható fejlécsor */
 .sara-header {{ font-size: 1.25rem; font-weight: 500; line-height: 2.5rem; white-space: nowrap;
                overflow: hidden; text-overflow: ellipsis; }}
-.sara-header .sep {{ margin: 0 .6rem; opacity: .35; font-weight: 400; color: {BRAND}; }}
+.sara-header .sep {{ margin: 0 .6rem; font-weight: 400; color: {BRAND_ACCENT}; }}
+/* a fejlécsor alatt vékony azúr vonal, mint a levélpapíron */
+.st-key-header_row {{ border-bottom: 2px solid {BRAND_ACCENT}; padding-bottom: .15rem; }}
 .sara-header .badge {{ margin-left: .5rem; font-size: .85rem; font-weight: 400; opacity: .7; }}
 
 /* kisebb címsorok Sara válaszaiban és az előnézetekben (a törzsszöveg változatlan) */
@@ -203,23 +209,23 @@ div[data-testid="stVerticalBlockBorderWrapper"]:has(> div > .st-key-search_box) 
 .sara-hit .title {{ font-weight: 600; }}
 .sara-hit .meta {{ opacity: .6; font-size: .85rem; margin-left: .4rem; }}
 .sara-hit .snip {{ font-size: .92rem; opacity: .9; margin-top: .15rem; }}
-.sara-hit mark, .sara-header mark {{ background: #ffe58a; color: inherit; padding: 0 .12em; border-radius: 3px; }}
+.sara-hit mark, .sara-header mark {{ background: {BRAND_ACCENT_SOFT}; color: inherit; padding: 0 .12em; border-radius: 3px; }}
 </style>
 """
 
 
-LOGO_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "nf_office_logo.svg")
+LOGO_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "contact_line_logo.svg")
 
 
 @st.cache_data(show_spinner=False)
 def logo_data_uri(color):
-    """Az NF Office logó a megadott arculati színben, képként beágyazható formában (üres, ha a fájl hiányzik)."""
+    """A Contact-Line 2002 logó (a mélykék elemek a megadott színben), képként beágyazható formában (üres, ha a fájl hiányzik)."""
     try:
         with open(LOGO_FILE, encoding="utf-8") as fh:
             svg = fh.read()
     except OSError:
         return ""
-    svg = svg.replace("#b0afb0", color)
+    svg = svg.replace("#0A2540", color)
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode("ascii")
 
 
@@ -231,14 +237,14 @@ ASSISTANT_NAME = "Jean" if ASSISTANT == "JEAN" else "Sara"
 ASSISTANT_FROM = "Jeantól" if ASSISTANT == "JEAN" else "Sarától"
 ASSISTANT_ACC = "Jeant" if ASSISTANT == "JEAN" else "Sarát"
 
-# JEAN napján a felület zsályazöld tónust kap, hogy első ránézésre látszódjon, ki dolgozik
+# JEAN napján a felület az arculat azúr árnyalatát kapja, hogy első ránézésre látszódjon, ki dolgozik
 JEAN_CSS = """
 <style>
 .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stBottom"] > div
-  { background-color: #F1F5EE !important; }
-[data-testid="stSidebar"] > div:first-child { background-color: #E3EBDD !important; }
+  { background-color: #F0FCFF !important; }
+[data-testid="stSidebar"] > div:first-child { background-color: #DDF8FF !important; }
 .jean-flag { display: inline-block; margin-left: .7rem; padding: .05rem .55rem; border-radius: 1rem;
-  font-size: .8rem; font-weight: 500; letter-spacing: .05em; background: #5C7A55; color: #fff; vertical-align: middle; }
+  font-size: .8rem; font-weight: 600; letter-spacing: .05em; background: #00D4FF; color: #0A2540; vertical-align: middle; }
 </style>
 """
 
@@ -248,7 +254,7 @@ def _avatar(name):
     return path if os.path.exists(path) else None
 
 
-# A beszélgetés szimbólumai az arculat színeiben: a felhasználó (NT) szürke, Sara (S) mályvaszürke
+# A beszélgetés szimbólumai az arculat színeiben: a felhasználó szürke, Sara (S) mélykék, Jean (J) azúr
 AVATARS = {"user": _avatar("avatar_user.svg"),
            "assistant": _avatar("avatar_jean.svg" if ASSISTANT == "JEAN" else "avatar_sara.svg")}
 
@@ -297,7 +303,7 @@ def get_attachment_content(attachment_id):
 @st.cache_data(show_spinner=False, max_entries=20)
 def export_markdown(doc_id, fmt, title, paper=""):
     """A Sara által készített Markdown dokumentum átalakítása Word vagy PDF formátumra.
-    paper: "" = NF Office beépített arculat, "ures" = fejléc nélkül, különben a fejléces papír dokumentum-azonosítója
+    paper: "" = a Contact-Line 2002 beépített arculata, "ures" = fejléc nélkül, különben a fejléces papír dokumentum-azonosítója
     (egy cég-törzsaktába feltöltött .docx)."""
     text = base64.b64decode(get_document_content(doc_id)).decode("utf-8", errors="replace")
     if paper and paper != "ures":
@@ -330,7 +336,7 @@ def docx_to_pdf(docx):
 
 # --- FEJLÉCES PAPÍROK ---
 # A cég-törzsaktába feltöltött Word-sablon (fejléc, lábléc, margó, betű) a cég fejléces papírja; az adatlap fülön
-# jelölhető ki. A projektnél megadható, melyik cégé (különben a kapcsolt cég papírja, ha van, egyébként NF Office);
+# jelölhető ki. A projektnél megadható, melyik cégé (különben a kapcsolt cég papírja, ha van, egyébként a Contact-Line 2002 beépített arculata);
 # letöltéskor dokumentumonként átállítható; iratmintánál a meghatalmazó / szerződő cég papírja az alapértelmezés.
 def letterheads():
     """[(cég-törzsakta, papír dokumentum-azonosító)] – csak a kijelölt fejléces papírral rendelkező cégek."""
@@ -357,7 +363,7 @@ def project_paper_setting(project_id):
 
 
 def project_paper(project_id):
-    """A projekt papírja: "" (NF Office), "ures", vagy egy fejléces papír azonosítója."""
+    """A projekt papírja: "" (Contact-Line 2002, beépített), "ures", vagy egy fejléces papír azonosítója."""
     papers = letterheads()
     chosen = project_paper_setting(project_id)
     if chosen in ("nf", "ures"):
@@ -374,7 +380,7 @@ def project_paper(project_id):
 
 def paper_options():
     """A választható papírok: (érték, felirat)."""
-    return ([("", "NF Office (beépített)")] + [(paper, f"{r.get('name')} fejléces papírja") for r, paper in letterheads()]
+    return ([("", "Contact-Line 2002 (beépített)")] + [(paper, f"{r.get('name')} fejléces papírja") for r, paper in letterheads()]
             + [("ures", "Üres (fejléc nélkül)")])
 
 
@@ -2309,7 +2315,7 @@ def render_template_form(project, project_docs, selected=None):
         st.session_state[ikey] = form.get("instructions", "")
     form["instructions"] = st.text_input(
         "Utasítás a kitöltéshez (nem kötelező):", key=ikey,
-        placeholder="pl. a meghatalmazó az NF Office Kft., a meghatalmazott Kovács Anna, a jármű az ABC-123").strip()
+        placeholder="pl. a meghatalmazó a Contact-Line 2002 Bt., a meghatalmazott Kovács Anna, a jármű az ABC-123").strip()
     sig = ",".join(sorted(str(d["id"]) for d in (selected or []))) + "|" + form["instructions"]
     if "prefill" in form and form.get("prefill_sig") != sig:
         form.pop("prefill", None)
@@ -3201,10 +3207,10 @@ def render_settings_tab(project, readonly):
         papers = letterheads()
         opts = [""] + [r["id"] for r, _ in papers] + ["nf", "ures"]
         names = {r["id"]: r.get("name") for r, _ in papers}
-        names.update(nf="NF Office (beépített)", ures="Üres (fejléc nélkül)")
+        names.update(nf="Contact-Line 2002 (beépített)", ures="Üres (fejléc nélkül)")
         cur = project_paper_setting(pid)
         auto = next((names[r] for r in (project.get("links") or []) if r in names and r not in ("nf", "ures")),
-                    "NF Office")
+                    "Contact-Line 2002")
         new_paper = st.selectbox(
             ":material/contract: Fejléces papír – melyik cégé a projekt", opts,
             index=opts.index(cur) if cur in opts else 0, disabled=readonly, key=f"set_paper_{pid}",
@@ -3599,7 +3605,7 @@ def _search_changed():
 with st.sidebar:
     _logo = logo_data_uri(BRAND)
     if _logo:
-        st.markdown(f'<div class="sara-logo"><img src="{_logo}" alt="NF Office"></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="sara-logo"><img src="{_logo}" alt="Contact-Line 2002"></div>', unsafe_allow_html=True)
     st.radio("Ki dolgozik?", ["SARA", "JEAN"], key="assistant", horizontal=True,
              format_func=lambda a: "SARA (alapos)" if a == "SARA" else "JEAN (olcsó)",
              help="SARA a pontosabb modellel dolgozik (Sonnet), JEAN a helyettese, sokkal olcsóbban (Haiku). "
@@ -3684,7 +3690,7 @@ with st.sidebar:
             with st.form("record_form", clear_on_submit=True, border=False):
                 rtype = st.selectbox("Fajta", list(records.RECORD_TYPES),
                                      format_func=lambda k: records.RECORD_TYPES[k][0])
-                rname = st.text_input("Név", placeholder="pl. NF Office Kft. · Budapest, Fő u. 1. · Kovács Anna · ABC-123")
+                rname = st.text_input("Név", placeholder="pl. Contact-Line 2002 Bt. · Budapest, Fő u. 1. · Kovács Anna · ABC-123")
                 if st.form_submit_button(":material/add: Létrehozás", **STRETCH) and rname.strip():
                     try:
                         created = db.create_project(rname, top_sort_order(all_projects), kind="torzs",
@@ -3809,7 +3815,8 @@ elif current_project:
                   + ('<span class="badge">(lezárt)</span>' if current_closed else ""))
 else:
     right_html = ""
-col_title, col_back, col_timer = st.columns([6, 2, 2.2], vertical_alignment="center")
+with st.container(key="header_row"):   # alatta azúr vonal (CSS: .st-key-header_row)
+    col_title, col_back, col_timer = st.columns([6, 2, 2.2], vertical_alignment="center")
 col_title.markdown(
     f'<div class="sara-header">{ASSISTANT_NAME} asszisztens'
     + ('<span class="jean-flag">Sara helyett</span>' if ASSISTANT == "JEAN" else "")
