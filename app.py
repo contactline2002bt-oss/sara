@@ -22,6 +22,7 @@ import db
 import docx_edit
 import export_tools as ex
 import diffreport
+import feor
 import finder
 import navtax
 import njt
@@ -39,7 +40,7 @@ if (not hasattr(db, "get_tasks") or not hasattr(db, "delete_summary") or not has
         or not hasattr(db, "get_documents_meta") or not hasattr(db, "get_textless_documents")
         or "usage_cb" not in inspect.signature(chat_flow.run_conversation).parameters):
     import importlib
-    for _module in (stx, ex, db, docx_edit, costs, finder, consistency, njt, navtax, redflag, diffreport, registry, records, tplfill, chat_flow):
+    for _module in (stx, ex, db, docx_edit, costs, feor, finder, consistency, njt, navtax, redflag, diffreport, registry, records, tplfill, chat_flow):
         importlib.reload(_module)
 
 # Kényszerített oldal konfiguráció a legelső sorban
@@ -828,6 +829,7 @@ def make_legal_handlers(pid, extra_files):
     return {"red_flag_review": red_flag_review, "compare_versions": compare_versions,
             "create_redline_document": create_redline,
             "adoszam_ellenorzes": lambda args: navtax.report(*navtax.query(NAV_CFG, args.get("adoszam"))),
+            "feor_kereso": feor.tool_report,
             "njt_jogszabaly": lambda args: njt.lookup(args.get("jogszabaly"), args.get("paragrafus"),
                                                       args.get("kulcsszo"))}
 
@@ -2661,7 +2663,8 @@ def render_chat_tab(project, readonly, project_docs, messages, atts_by_msg, summ
             tools = tools + [finder.TOOL]
         task_handlers.update(make_finder_handler(pid, all_projs))   # a webes kutatás projekt nélkül is megy
         # Larától átvett eszközök (jogszabály, adószám, Red Flag, összehasonlítás, redline)
-        tools = tools + [njt.TOOL, njt.WEB_FETCH, navtax.TOOL, redflag.TOOL, diffreport.TOOL, diffreport.REDLINE_TOOL]
+        tools = tools + [njt.TOOL, njt.WEB_FETCH, navtax.TOOL, feor.TOOL, redflag.TOOL, diffreport.TOOL,
+                         diffreport.REDLINE_TOOL]
         _attached_all = list(current_files) + [f for m in messages[::-1]
                                                for f in load_attachment_files(atts_by_msg.get(m.get("id"), []))]
         task_handlers.update(make_legal_handlers(pid, _attached_all))
@@ -3747,6 +3750,17 @@ with st.sidebar:
         out = st.session_state.get("tax_check_out")
         if out:
             (st.markdown if out[0] == "ok" else st.warning)(out[1].replace("\n", "  \n"))
+    with st.popover(":material/work: FEOR-kereső", **STRETCH):   # KSH FEOR-08 lista, AI nélkül
+        feor_q = st.text_input("Munkakör vagy kód", placeholder="pl. könyvelő, titkár, 4111, 52",
+                               key="feor_q", help="Ékezet nélkül is keres. Számmal a kódcsoportot listázza.")
+        if feor_q.strip():
+            feor_hits = feor.search(feor_q)
+            if feor_hits:
+                st.markdown("  \n".join(f"**{c}** – [{html.escape(feor.CODES[c])}]({feor.ksh_url(c)})"
+                                        for c in feor_hits))
+                st.caption("A megnevezésre kattintva a KSH leírása nyílik meg (feladatok, ide tartozó munkakörök).")
+            else:
+                st.info("Nincs találat. Próbálj rövidebb vagy általánosabb szót.")
     if st.button(":material/badge: Profil", key="profile_btn", **STRETCH):
         st.session_state["view"] = "profile"
         st.rerun()

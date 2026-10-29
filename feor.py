@@ -72,6 +72,61 @@ def suggest(text, n=4):
     return [c for _, c in scored[:n]]
 
 
+def ksh_url(code):
+    return KSH_URL.format(group=code[0], code=code)
+
+
+# Gyakori köznapi munkakörnevek, amelyek a FEOR megnevezésében nem így szerepelnek (kulcs ékezet nélkül)
+ALIASES = {
+    "raktaros": ["4131", "9223", "9224"], "raktarkezelo": ["4131"], "rakodo": ["9223"],
+    "sofor": ["8416", "8417"], "gepkocsivezeto": ["8416", "8417"], "kamionos": ["8417"],
+    "futar": ["9234", "9233"], "kezbesito": ["9233"],
+    "ugyvezeto": ["1210"], "igazgato": ["1210"], "asszisztens": ["4111", "4112"],
+    "irodavezeto": ["3221"], "adminisztrator": ["4112"], "programozo": ["2142"],
+    "eladono": ["5113"], "penztaros": ["5117", "4211"], "biztonsagi or": ["5254", "9231"],
+    "portas": ["9231"], "hr": ["1412", "4134"], "berszamfejto": ["4123"],
+}
+
+
+def search(text, n=15):
+    """FEOR-kereső: kódra (vagy kódelejére, pl. 41 → 41xx) és megnevezésre is keres, ékezet nélkül is.
+    Visszaad: kódok listája a legjobb találattal elöl."""
+    raw = str(text or "").strip()
+    if not raw:
+        return []
+    digits = re.sub(r"\D", "", raw)
+    if digits and re.fullmatch(r"[\d\s.\-]+", raw):   # csak számot írt: kód vagy kódcsoport
+        return [c for c in CODES if c.startswith(digits[:4])][:max(n, 60)]
+    q = _fold(raw)
+    alias = [c for key, codes in ALIASES.items() if key.startswith(q) or q.startswith(key) for c in codes]
+    # a megnevezés valamelyik szava így kezdődik (rövid szónál ne találjon szó közepére, pl. pék ≠ képek)
+    pat = re.compile(r"(?<!\w)" + re.escape(q))
+    exact = [c for c, name in CODES.items() if pat.search(_fold(name)) and c not in alias]
+    exact.sort(key=lambda c: (not _fold(CODES[c]).startswith(q), len(CODES[c])))
+    exact = list(dict.fromkeys(alias)) + exact
+    rest = [c for c in suggest(raw, n=n) if c not in exact] if len(q) >= 4 or not exact else []
+    return (exact + rest)[:n]
+
+
+TOOL = {
+    "name": "feor_kereso",
+    "description": (
+        "FEOR-08 foglalkozási kód keresése a KSH listájából (485 foglalkozás): munkakör megnevezése alapján a "
+        "lehetséges kódok, vagy kód alapján a megnevezés. Munkaszerződéshez, biztosítotti bejelentéshez (T1041) "
+        "használd; ha több kód is szóba jöhet, sorold fel őket, és mondd meg, melyik illik leginkább."),
+    "input_schema": {"type": "object", "properties": {
+        "kereses": {"type": "string", "description": "munkakör (pl. 'könyvelő') vagy kód (pl. '3610')"}},
+        "required": ["kereses"]},
+}
+
+
+def tool_report(args):
+    codes = search(args.get("kereses"), n=10)
+    if not codes:
+        return "Nincs találat a FEOR-08 listában. Próbáld rövidebb vagy általánosabb szóval."
+    return "FEOR-08 találatok (KSH):\n" + "\n".join(f"- {label(c)} ({ksh_url(c)})" for c in codes)
+
+
 def _html_text(data):
     try:
         from lxml import html as lhtml
