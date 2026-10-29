@@ -9,3 +9,4 @@ reportlab
 markdown-it-py
 pypdf
 pillow
+requests

@@ -26,6 +26,9 @@ APP_PASSWORD = "<belépési jelszó>"
 # ASSZISZTENS_ALAP = "SARA"        # belépéskor ki dolgozik: "SARA" vagy "JEAN"
 # SARA_SZEMELY = "..."             # személyes adatok Sarának (név, megszólítás)
 # NAV_LOGIN / NAV_PASSWORD / NAV_SIGNKEY / NAV_TAXNUMBER   # NAV Online Számla adószám-ellenőrzés
+# MAGENTO_URL = "https://bisa-webshop.hu"   # BISA webshop: termékek, készlet, rendelések (csak olvasás)
+# MAGENTO_TOKEN = "..."                     # Magento integrációs hozzáférési token
+# MAGENTO_STORE = "default"   MAGENTO_STOCK_ID = "1"
 ```
 
 A `secrets.toml` soha ne kerüljön a tárolóba (a `.gitignore` kizárja).

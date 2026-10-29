@@ -24,6 +24,7 @@ import export_tools as ex
 import diffreport
 import feor
 import finder
+import magento
 import navtax
 import njt
 import records
@@ -40,7 +41,7 @@ if (not hasattr(db, "get_tasks") or not hasattr(db, "delete_summary") or not has
         or not hasattr(db, "get_documents_meta") or not hasattr(db, "get_textless_documents")
         or "usage_cb" not in inspect.signature(chat_flow.run_conversation).parameters):
     import importlib
-    for _module in (stx, ex, db, docx_edit, costs, feor, finder, consistency, njt, navtax, redflag, diffreport, registry, records, tplfill, chat_flow):
+    for _module in (stx, ex, db, docx_edit, costs, feor, finder, magento, consistency, njt, navtax, redflag, diffreport, registry, records, tplfill, chat_flow):
         importlib.reload(_module)
 
 # Kényszerített oldal konfiguráció a legelső sorban
@@ -84,6 +85,7 @@ STRETCH = ({"width": "stretch"} if "width" in inspect.signature(st.button).param
 ACCEPT_NEW_OPTIONS = "accept_new_options" in inspect.signature(st.selectbox).parameters
 
 NAV_CFG = {}
+MAGENTO_CFG = {}   # a BISA webshop (Magento) olvasó kapcsolata; üres, ha nincs beállítva
 
 # --- KULCSOK BIZTONSÁGOS BETÖLTÉSE ---
 try:
@@ -96,6 +98,8 @@ try:
     # a cég NAV Online Számla technikai felhasználója (adószám-ellenőrzéshez); ha hiányzik, az eszköz ezt jelzi
     NAV_CFG = {k: str(st.secrets.get(f"NAV_{k.upper()}", "")).strip() for k in ("login", "password", "signkey",
                                                                                  "taxnumber")}
+    MAGENTO_CFG = {k: str(st.secrets.get(f"MAGENTO_{k.upper()}", "")).strip() for k in ("url", "token", "store",
+                                                                                      "stock_id")}
 except Exception:
     st.error("Hiba! Hiányzik a Secrets konfiguráció a Streamlit felületén.")
     st.stop()
@@ -2674,6 +2678,9 @@ def render_chat_tab(project, readonly, project_docs, messages, atts_by_msg, summ
         _attached_all = list(current_files) + [f for m in messages[::-1]
                                                for f in load_attachment_files(atts_by_msg.get(m.get("id"), []))]
         task_handlers.update(make_legal_handlers(pid, _attached_all))
+        if magento.configured(MAGENTO_CFG):   # BISA webshop: termékek, készlet, rendelések (csak olvasás)
+            tools = tools + magento.TOOLS
+            task_handlers.update(magento.handlers(MAGENTO_CFG))
         attached = [f for m in messages for f in load_attachment_files(atts_by_msg.get(m.get("id"), []))
                     if f[0].lower().endswith(".docx")]
         docx_sources = [f for f in current_files if f[0].lower().endswith(".docx")] + attached[::-1]
